@@ -31,7 +31,6 @@ const getSingle = async (email) => {
 };
 
 const login = async (email, password) => {
-  console.log("Password: ", password);
   const doc = await getSingle(email);
   if (!doc || !(await doc.isPasswordMatch(password))) {
     throw ApiError(httpStatus.UNAUTHORIZED, "Incorrect username or password");

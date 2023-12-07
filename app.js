@@ -24,7 +24,7 @@ app.use(cors());
 // Middleware to log URL and request type
 app.use((req, res, next) => {
   const fullUrl = `${req.protocol}://${req.headers.host}${req.originalUrl}`;
-  console.log(`|Full-URL,  Request-Type|   ::   |${fullUrl},  ${req.method}|`);
+  //console.log(`|Full-URL,  Request-Type|   ::   |${fullUrl},  ${req.method}|`);
   next();
 });
 
@@ -39,10 +39,11 @@ app.get("/", function (req, res) {
   });
 });
 app.use(errorHandler);
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
-  await connect();
-  console.log(`Server is running ${PORT}`);
-});
-
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3000;
+  const server = app.listen(PORT, async () => {
+    await connect();
+    console.log(`Server is running ${PORT}`);
+  });
+}
 module.exports = app;
